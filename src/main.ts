@@ -21,10 +21,13 @@ import { RequestClient } from "./fi/hg/core/RequestClient";
 import { CommandArgumentUtils } from "./fi/hg/core/cmd/utils/CommandArgumentUtils";
 import { ParsedCommandArgumentStatus } from "./fi/hg/core/cmd/types/ParsedCommandArgumentStatus";
 import { RequestServer } from "./fi/hg/core/RequestServer";
-import { BackendController } from "./controllers/BackendController";
+import { EcbBackendController } from "./controllers/EcbBackendController";
 import { RequestRouter } from "./fi/hg/core/requestServer/RequestRouter";
 import { Headers } from "./fi/hg/core/request/Headers";
 import { BUILD_USAGE_URL, BUILD_WITH_FULL_USAGE } from "./constants/build";
+import { CurrencyService } from "./fi/hg/core/CurrencyService";
+import { EcbBackendUtils } from "./fi/hg/ecb/EcbBackendUtils";
+import { CurrencyRates } from "./fi/hg/core/types/CurrencyRates";
 
 const LOG = LogService.createLogger('main');
 
@@ -53,8 +56,16 @@ export async function main (
             return exitStatus;
         }
 
+        const currencyService = new CurrencyService(
+            () : Promise<CurrencyRates> => EcbBackendUtils.fetchEuroRates()
+        );
+
+        await currencyService.initialize();
+
+        EcbBackendController.setCurrencyService(currencyService);
+
         const server = new RequestServer(BACKEND_URL);
-        server.attachController(BackendController);
+        server.attachController(EcbBackendController);
         server.start();
 
         let serverListener : any = undefined;
