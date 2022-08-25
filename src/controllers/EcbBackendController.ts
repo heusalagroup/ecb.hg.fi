@@ -24,7 +24,7 @@ export class EcbBackendController {
 
     @GetMapping("/")
     public static async getIndex (
-        @RequestHeader('X-Authorization', {
+        @RequestHeader('Authorization', {
             required: false,
             defaultValue: ''
         })
@@ -37,9 +37,7 @@ export class EcbBackendController {
                     createErrorDTO('Service was not initialized', 500)
                 );
             }
-            return ResponseEntity.ok(
-                createEcbDTO(rates)
-            );
+            return ResponseEntity.ok( createEcbDTO(rates) );
         } catch (err) {
             LOG.error(`ERROR: `, err);
             return ResponseEntity.internalServerError<ErrorDTO>().body(

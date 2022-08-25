@@ -1,5 +1,24 @@
 # @heusalagroup/ecb.hg.fi
 
+## Using with docker-compose
+
+### Build the service
+
+```shell
+docker-compose build
+```
+
+### Start the service
+
+```shell
+docker-compose up
+```
+
+## Local development
+
+*Note!* This is so small service that local development can be done using Docker 
+much easier. It's also much more secure option.
+
 ### Start the server in development mode
 
 FIXME: This isn't working right now. Use production mode.
