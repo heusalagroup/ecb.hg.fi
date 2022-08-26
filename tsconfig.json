@@ -29,6 +29,6 @@
 
   },
   "include": [
-    "./src/ecb.hg.fi.ts"
+    "./src/hg-ecb.ts"
   ]
 }
