@@ -29,7 +29,7 @@ console.log(`Building with options:
   BUILD_WITH_FULL_USAGE       = '${BUILD_WITH_FULL_USAGE}'`);
 
 export default {
-    input: 'src/ecb.hg.fi.ts',
+    input: 'src/hg-ecb.ts',
     external: [
         'node:buffer',
         'node:path',
